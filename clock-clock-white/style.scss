@@ -1,0 +1,640 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  
+  --clock-size: 100px;
+  --tick-length: 8px;
+  --pointer-width: 10px;
+}
+
+ul.pointer > li {
+  transition: all 0.8s ease;
+}
+
+body,
+html {
+  width: 100%;
+  height: 100%;
+}
+body {
+  // background-color: #eee;
+  background-image: linear-gradient(to top, #bbb 0%, #eee 100%);
+  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  
+}
+
+.abs-center {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+.clock {
+  width: var(--clock-size);
+  height: var(--clock-size);
+  border-radius: 50%;
+  background: #fafafa;
+  border: 5px solid white;
+  position: relative;
+  
+  &::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    z-index: 10;
+  }
+}
+
+// ticks
+ul.ticks {
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  overflow: hidden;
+  list-style: none;
+  
+  & li {
+    position: absolute;
+    width: 2px;
+    background: #888;
+    height: 100%;
+    left: 50%;
+    top: 50%;
+    margin: 0 !important;
+    transform: translate(-50%, -50%);
+    &::after {
+      content: "";
+      width: 2px;
+      height: inherit;
+      background: inherit;
+      position: absolute;
+      left: 0;
+      top: 0;
+      transform: rotate(30deg);
+    }
+    &::before {
+      content: "";
+      width: 2px;
+      height: inherit;
+      background: inherit;
+      position: absolute;
+      left: 0;
+      top: 0;
+      transform: rotate(-30deg);
+    }
+    &:nth-child(2) {
+      transform: translate(-50%, -50%) rotate(90deg);
+    }
+  }
+  &::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    left: var(--tick-length);
+    top: var(--tick-length);
+    width: calc(100% - 2 * var(--tick-length));
+    height: calc(100% - 2 * var(--tick-length));
+    background: #fafafa;
+  }
+}
+
+// pointers
+ul.pointer {
+  width: inherit;
+  height: inherit;
+  border: inherit;
+  border-color: transparent;
+  z-index: 1;
+  border-radius: 50%;
+  list-style: none;
+  overflow: hidden;
+  
+  & > li {
+    width: calc(50% + var(--pointer-width) / 2);
+    height: var(--pointer-width);
+    background: black;
+    // border-radius: calc(var(--pointer-width) / 2);
+    border-top-left-radius: calc(var(--pointer-width) / 2);
+    border-bottom-left-radius: calc(var(--pointer-width) / 2);
+    position: absolute;
+    left: calc(50% - var(--pointer-width) / 2);
+    top: calc(50% - var(--pointer-width) / 2);
+    transform-origin: calc( var(--pointer-width) / 2) calc( var(--pointer-width) / 2);
+    
+    // animation-name: tstRotate;
+    // animation-duration: 10s;
+    // animation-iteration-count: infinite;
+    // &:nth-child(2) {
+    //   animation-delay: 1s;
+    // }
+    // @keyframes tstRotate {
+    //   0%{
+    //     transform: rotate(0);
+    //   }
+    //   100% {
+    //     transform: rotate(360deg);
+    //   }
+    // }
+  }
+}
+
+// number
+section.number {
+  width: calc(2 * var(--clock-size) + 10px);
+  height: calc(3 * var(--clock-size) + 10px);
+  display: flex;
+  flex-wrap: wrap;
+}
+
+// 
+#display-frame {
+  width: 100%;
+  height: auto;
+  display: flex;
+  aligin-items:center;
+  justify-content: center;
+  
+  section.number {
+    flex-shrink: 0;
+  }
+}
+
+// set states
+section.number {
+  // number = 0
+  &[data-value="0"] {
+    .clock[data-row="0"] {
+      // row_0 col_0
+      &[data-col="0"] {
+        ul.pointer > li:nth-child(1) { transform: rotate(0deg); }
+        ul.pointer > li:nth-child(2) { transform: rotate(90deg); }
+      }
+      // row_0 col_1
+      &[data-col="1"] {
+        ul.pointer > li:nth-child(1) { transform: rotate(180deg); }
+        ul.pointer > li:nth-child(2) { transform: rotate(90deg); }
+      }
+    }
+    .clock[data-row="1"] {
+      // row_1 col_0
+      &[data-col="0"] {
+        ul.pointer > li:nth-child(1) { transform: rotate(-90deg); }
+        ul.pointer > li:nth-child(2) { transform: rotate(90deg); }
+      }
+      // row_1 col_1
+      &[data-col="1"] {
+        ul.pointer > li:nth-child(1) { transform: rotate(-90deg); }
+        ul.pointer > li:nth-child(2) { transform: rotate(90deg); }
+      }
+    }
+    .clock[data-row="2"] {
+      // row_2 col_0
+      &[data-col="0"] {
+        ul.pointer > li:nth-child(1) { transform: rotate(-90deg); }
+        ul.pointer > li:nth-child(2) { transform: rotate(0deg); }
+      }
+      // row_2 col_1
+      &[data-col="1"] {
+        ul.pointer > li:nth-child(1) { transform: rotate(180deg); }
+        ul.pointer > li:nth-child(2) { transform: rotate(-90deg); }
+      }
+    }
+  }
+  
+  // number = 1
+  &[data-value="1"] {
+    .clock[data-row="0"] {
+      // row_0 col_0
+      &[data-col="0"] {
+        ul.pointer > li:nth-child(1) { transform: rotate(135deg); }
+        ul.pointer > li:nth-child(2) { transform: rotate(135deg); }
+      }
+      // row_0 col_1
+      &[data-col="1"] {
+        ul.pointer > li:nth-child(1) { transform: rotate(90deg); }
+        ul.pointer > li:nth-child(2) { transform: rotate(90deg); }
+      }
+    }
+    .clock[data-row="1"] {
+      // row_1 col_0
+      &[data-col="0"] {
+        ul.pointer > li:nth-child(1) { transform: rotate(135deg); }
+        ul.pointer > li:nth-child(2) { transform: rotate(135deg); }
+      }
+      // row_1 col_1
+      &[data-col="1"] {
+        ul.pointer > li:nth-child(1) { transform: rotate(-90deg); }
+        ul.pointer > li:nth-child(2) { transform: rotate(90deg); }
+      }
+    }
+    .clock[data-row="2"] {
+      // row_2 col_0
+      &[data-col="0"] {
+        ul.pointer > li:nth-child(1) { transform: rotate(135deg); }
+        ul.pointer > li:nth-child(2) { transform: rotate(135deg); }
+      }
+      // row_2 col_1
+      &[data-col="1"] {
+        ul.pointer > li:nth-child(1) { transform: rotate(-90deg); }
+        ul.pointer > li:nth-child(2) { transform: rotate(-90deg); }
+      }
+    }
+  }
+  
+  // number = 2
+  &[data-value="2"] {
+    .clock[data-row="0"] {
+      // row_0 col_0
+      &[data-col="0"] {
+        ul.pointer > li:nth-child(1) { transform: rotate(0deg); }
+        ul.pointer > li:nth-child(2) { transform: rotate(0deg); }
+      }
+      // row_0 col_1
+      &[data-col="1"] {
+        ul.pointer > li:nth-child(1) { transform: rotate(180deg); }
+        ul.pointer > li:nth-child(2) { transform: rotate(90deg); }
+      }
+    }
+    .clock[data-row="1"] {
+      // row_1 col_0
+      &[data-col="0"] {
+        ul.pointer > li:nth-child(1) { transform: rotate(0deg); }
+        ul.pointer > li:nth-child(2) { transform: rotate(90deg); }
+      }
+      // row_1 col_1
+      &[data-col="1"] {
+        ul.pointer > li:nth-child(1) { transform: rotate(-90deg); }
+        ul.pointer > li:nth-child(2) { transform: rotate(180deg); }
+      }
+    }
+    .clock[data-row="2"] {
+      // row_2 col_0
+      &[data-col="0"] {
+        ul.pointer > li:nth-child(1) { transform: rotate(-90deg); }
+        ul.pointer > li:nth-child(2) { transform: rotate(0deg); }
+      }
+      // row_2 col_1
+      &[data-col="1"] {
+        ul.pointer > li:nth-child(1) { transform: rotate(180deg); }
+        ul.pointer > li:nth-child(2) { transform: rotate(180deg); }
+      }
+    }
+  }
+  
+  // number = 3
+  &[data-value="3"] {
+    .clock[data-row="0"] {
+      // row_0 col_0
+      &[data-col="0"] {
+        ul.pointer > li:nth-child(1) { transform: rotate(0deg); }
+        ul.pointer > li:nth-child(2) { transform: rotate(0deg); }
+      }
+      // row_0 col_1
+      &[data-col="1"] {
+        ul.pointer > li:nth-child(1) { transform: rotate(180deg); }
+        ul.pointer > li:nth-child(2) { transform: rotate(90deg); }
+      }
+    }
+    .clock[data-row="1"] {
+      // row_1 col_0
+      &[data-col="0"] {
+        ul.pointer > li:nth-child(1) { transform: rotate(0deg); }
+        ul.pointer > li:nth-child(2) { transform: rotate(0deg); }
+      }
+      // row_1 col_1
+      &[data-col="1"] {
+        ul.pointer > li:nth-child(1) { transform: rotate(180deg); }
+        ul.pointer > li:nth-child(2) { transform: rotate(-90deg); }
+      }
+    }
+    .clock[data-row="2"] {
+      // row_2 col_0
+      &[data-col="0"] {
+        ul.pointer > li:nth-child(1) { transform: rotate(0deg); }
+        ul.pointer > li:nth-child(2) { transform: rotate(0deg); }
+      }
+      // row_2 col_1
+      &[data-col="1"] {
+        ul.pointer > li:nth-child(1) { transform: rotate(180deg); }
+        ul.pointer > li:nth-child(2) { transform: rotate(-90deg); }
+      }
+    }
+  }
+  
+  // number = 4
+  &[data-value="4"] {
+    .clock[data-row="0"] {
+      // row_0 col_0
+      &[data-col="0"] {
+        ul.pointer > li:nth-child(1) { transform: rotate(90deg); }
+        ul.pointer > li:nth-child(2) { transform: rotate(90deg); }
+      }
+      // row_0 col_1
+      &[data-col="1"] {
+        ul.pointer > li:nth-child(1) { transform: rotate(90deg); }
+        ul.pointer > li:nth-child(2) { transform: rotate(90deg); }
+      }
+    }
+    .clock[data-row="1"] {
+      // row_1 col_0
+      &[data-col="0"] {
+        ul.pointer > li:nth-child(1) { transform: rotate(-90deg); }
+        ul.pointer > li:nth-child(2) { transform: rotate(0deg); }
+      }
+      // row_1 col_1
+      &[data-col="1"] {
+        ul.pointer > li:nth-child(1) { transform: rotate(-90deg); }
+        ul.pointer > li:nth-child(2) { transform: rotate(90deg); }
+      }
+    }
+    .clock[data-row="2"] {
+      // row_2 col_0
+      &[data-col="0"] {
+        ul.pointer > li:nth-child(1) { transform: rotate(135deg); }
+        ul.pointer > li:nth-child(2) { transform: rotate(135deg); }
+      }
+      // row_2 col_1
+      &[data-col="1"] {
+        ul.pointer > li:nth-child(1) { transform: rotate(-90deg); }
+        ul.pointer > li:nth-child(2) { transform: rotate(-90deg); }
+      }
+    }
+  }
+  
+  // number = 5
+  &[data-value="5"] {
+    .clock[data-row="0"] {
+      // row_0 col_0
+      &[data-col="0"] {
+        ul.pointer > li:nth-child(1) { transform: rotate(0deg); }
+        ul.pointer > li:nth-child(2) { transform: rotate(90deg); }
+      }
+      // row_0 col_1
+      &[data-col="1"] {
+        ul.pointer > li:nth-child(1) { transform: rotate(180deg); }
+        ul.pointer > li:nth-child(2) { transform: rotate(180deg); }
+      }
+    }
+    .clock[data-row="1"] {
+      // row_1 col_0
+      &[data-col="0"] {
+        ul.pointer > li:nth-child(1) { transform: rotate(-90deg); }
+        ul.pointer > li:nth-child(2) { transform: rotate(0deg); }
+      }
+      // row_1 col_1
+      &[data-col="1"] {
+        ul.pointer > li:nth-child(1) { transform: rotate(180deg); }
+        ul.pointer > li:nth-child(2) { transform: rotate(90deg); }
+      }
+    }
+    .clock[data-row="2"] {
+      // row_2 col_0
+      &[data-col="0"] {
+        ul.pointer > li:nth-child(1) { transform: rotate(0deg); }
+        ul.pointer > li:nth-child(2) { transform: rotate(0deg); }
+      }
+      // row_2 col_1
+      &[data-col="1"] {
+        ul.pointer > li:nth-child(1) { transform: rotate(180deg); }
+        ul.pointer > li:nth-child(2) { transform: rotate(-90deg); }
+      }
+    }
+  }
+  
+  // number = 6
+  &[data-value="6"] {
+    .clock[data-row="0"] {
+      // row_0 col_0
+      &[data-col="0"] {
+        ul.pointer > li:nth-child(1) { transform: rotate(0deg); }
+        ul.pointer > li:nth-child(2) { transform: rotate(90deg); }
+      }
+      // row_0 col_1
+      &[data-col="1"] {
+        ul.pointer > li:nth-child(1) { transform: rotate(180deg); }
+        ul.pointer > li:nth-child(2) { transform: rotate(180deg); }
+      }
+    }
+    .clock[data-row="1"] {
+      // row_1 col_0
+      &[data-col="0"] {
+        ul.pointer > li:nth-child(1) { transform: rotate(-90deg); }
+        ul.pointer > li:nth-child(2) { transform: rotate(90deg); }
+      }
+      // row_1 col_1
+      &[data-col="1"] {
+        ul.pointer > li:nth-child(1) { transform: rotate(180deg); }
+        ul.pointer > li:nth-child(2) { transform: rotate(90deg); }
+      }
+    }
+    .clock[data-row="2"] {
+      // row_2 col_0
+      &[data-col="0"] {
+        ul.pointer > li:nth-child(1) { transform: rotate(-90deg); }
+        ul.pointer > li:nth-child(2) { transform: rotate(0deg); }
+      }
+      // row_2 col_1
+      &[data-col="1"] {
+        ul.pointer > li:nth-child(1) { transform: rotate(180deg); }
+        ul.pointer > li:nth-child(2) { transform: rotate(-90deg); }
+      }
+    }
+  }
+  
+  // number = 7
+  &[data-value="7"] {
+    .clock[data-row="0"] {
+      // row_0 col_0
+      &[data-col="0"] {
+        ul.pointer > li:nth-child(1) { transform: rotate(0deg); }
+        ul.pointer > li:nth-child(2) { transform: rotate(0deg); }
+      }
+      // row_0 col_1
+      &[data-col="1"] {
+        ul.pointer > li:nth-child(1) { transform: rotate(180deg); }
+        ul.pointer > li:nth-child(2) { transform: rotate(90deg); }
+      }
+    }
+    .clock[data-row="1"] {
+      // row_1 col_0
+      &[data-col="0"] {
+        ul.pointer > li:nth-child(1) { transform: rotate(135deg); }
+        ul.pointer > li:nth-child(2) { transform: rotate(135deg); }
+      }
+      // row_1 col_1
+      &[data-col="1"] {
+        ul.pointer > li:nth-child(1) { transform: rotate(-90deg); }
+        ul.pointer > li:nth-child(2) { transform: rotate(90deg); }
+      }
+    }
+    .clock[data-row="2"] {
+      // row_2 col_0
+      &[data-col="0"] {
+        ul.pointer > li:nth-child(1) { transform: rotate(135deg); }
+        ul.pointer > li:nth-child(2) { transform: rotate(135deg); }
+      }
+      // row_2 col_1
+      &[data-col="1"] {
+        ul.pointer > li:nth-child(1) { transform: rotate(-90deg); }
+        ul.pointer > li:nth-child(2) { transform: rotate(-90deg); }
+      }
+    }
+  }
+  
+  // number = 8
+  &[data-value="8"] {
+    .clock[data-row="0"] {
+      // row_0 col_0
+      &[data-col="0"] {
+        ul.pointer > li:nth-child(1) { transform: rotate(0deg); }
+        ul.pointer > li:nth-child(2) { transform: rotate(90deg); }
+      }
+      // row_0 col_1
+      &[data-col="1"] {
+        ul.pointer > li:nth-child(1) { transform: rotate(180deg); }
+        ul.pointer > li:nth-child(2) { transform: rotate(90deg); }
+      }
+    }
+    .clock[data-row="1"] {
+      // row_1 col_0
+      &[data-col="0"] {
+        ul.pointer > li:nth-child(1) { transform: rotate(-90deg); }
+        ul.pointer > li:nth-child(2) { transform: rotate(0deg); }
+      }
+      // row_1 col_1
+      &[data-col="1"] {
+        ul.pointer > li:nth-child(1) { transform: rotate(180deg); }
+        ul.pointer > li:nth-child(2) { transform: rotate(90deg); }
+      }
+    }
+    .clock[data-row="2"] {
+      // row_2 col_0
+      &[data-col="0"] {
+        ul.pointer > li:nth-child(1) { transform: rotate(-90deg); }
+        ul.pointer > li:nth-child(2) { transform: rotate(0deg); }
+      }
+      // row_2 col_1
+      &[data-col="1"] {
+        ul.pointer > li:nth-child(1) { transform: rotate(180deg); }
+        ul.pointer > li:nth-child(2) { transform: rotate(-90deg); }
+      }
+    }
+  }
+  
+  // number = 9
+  &[data-value="9"] {
+    .clock[data-row="0"] {
+      // row_0 col_0
+      &[data-col="0"] {
+        ul.pointer > li:nth-child(1) { transform: rotate(0deg); }
+        ul.pointer > li:nth-child(2) { transform: rotate(90deg); }
+      }
+      // row_0 col_1
+      &[data-col="1"] {
+        ul.pointer > li:nth-child(1) { transform: rotate(180deg); }
+        ul.pointer > li:nth-child(2) { transform: rotate(90deg); }
+      }
+    }
+    .clock[data-row="1"] {
+      // row_1 col_0
+      &[data-col="0"] {
+        ul.pointer > li:nth-child(1) { transform: rotate(-90deg); }
+        ul.pointer > li:nth-child(2) { transform: rotate(0deg); }
+      }
+      // row_1 col_1
+      &[data-col="1"] {
+        ul.pointer > li:nth-child(1) { transform: rotate(-90deg); }
+        ul.pointer > li:nth-child(2) { transform: rotate(90deg); }
+      }
+    }
+    .clock[data-row="2"] {
+      // row_2 col_0
+      &[data-col="0"] {
+        ul.pointer > li:nth-child(1) { transform: rotate(-90deg); }
+        ul.pointer > li:nth-child(2) { transform: rotate(0deg); }
+      }
+      // row_2 col_1
+      &[data-col="1"] {
+        ul.pointer > li:nth-child(1) { transform: rotate(180deg); }
+        ul.pointer > li:nth-child(2) { transform: rotate(-90deg); }
+      }
+    }
+  }
+}
+
+// realtic shadow
+.clock {
+  box-shadow: 0px 10px 4px rgba(0,0,0,.1), 
+    10px 5px 10px rgba(0,0,0,.1), 
+    -10px 5px 10px rgba(0,0,0,.1),
+    0px 24px 5px rgba(0,0,0,.1);
+}
+.clock::after {
+  box-shadow: inset 0px 10px 4px rgba(0,0,0,.35),
+    inset 5px 5px 6px rgba(0,0,0,0.1),
+    inset -5px 5px 6px rgba(0,0,0,0.1);
+}
+// bottom
+section.number .clock[data-row="2"] {
+  box-shadow: 20px 30px 40px rgba(0,0,0,.4),
+      0px 30px 5px rgba(0,0,0,.15),
+      0px 60px 6px rgba(0,0,0,.05);
+}
+// left side
+section.number:nth-child(1) .clock[data-col="0"]:not([data-row="2"]) {
+  box-shadow: 0px 10px 4px rgba(0,0,0,.1),
+      10px 5px 10px rgba(0,0,0,.1),
+    -10px 5px 10px rgba(0,0,0,.1),
+    -20px 30px 5px rgba(0,0,0, .1);
+}
+
+// right side
+section.number:nth-last-child(1) .clock[data-col="1"]:not([data-row="2"]) {
+  box-shadow: 0px 10px 4px rgba(0,0,0,.1),
+      10px 5px 10px rgba(0,0,0,.1),
+    10px 5px 10px rgba(0,0,0,.1),
+    20px 30px 5px rgba(0,0,0, .1);
+}
+
+// left-bottom
+section.number:nth-child(1) .clock[data-col="0"][data-row="2"] {
+  box-shadow: 20px 30px 40px rgba(0,0,0,.4),
+      0px 30px 5px rgba(0,0,0,.15),
+      0px 60px 6px rgba(0,0,0,.05),
+       0px 10px 4px rgba(0,0,0,.1),
+        10px 5px 10px rgba(0,0,0,.1),
+      -10px 5px 10px rgba(0,0,0,.05),
+      -20px 30px 5px rgba(0,0,0, .06);
+}
+// right-bottom
+section.number:nth-last-child(1) .clock[data-col="1"][data-row="2"] {
+  box-shadow: 20px 30px 40px rgba(0,0,0,.4),
+      0px 30px 5px rgba(0,0,0,.15),
+      0px 60px 6px rgba(0,0,0,.05),
+       0px 10px 4px rgba(0,0,0,.1),
+        10px 5px 10px rgba(0,0,0,.1),
+      10px 5px 10px rgba(0,0,0,.05),
+      20px 30px 5px rgba(0,0,0, .06);
+}
+
+// first row
+section.number .clock[data-row="0"] {
+  box-shadow: 0px 10px 4px rgba(0,0,0,.1), 
+    10px 5px 10px rgba(0,0,0,.1), 
+    -10px 5px 10px rgba(0,0,0,.1),
+    0px 24px 5px rgba(0,0,0,.1),
+    0px -10px 20px rgba(255,255,255, .51),
+    0px -20px 10px rgba(255,255,255, .51);
+}
+
+a {
+  margin: 20px;
+  color: grey;
+}
