@@ -26,16 +26,16 @@ $key-height: 50px;
 .leopold-fc750 {
   width: 1020px;
   height: 382px;
-  border-radius: $br;
+  // border-radius: $br;
   background: linear-gradient(135deg, #8f0710, #af0914);
   padding: 14px;
   display: flex;
   flex-direction: column;
   align-items: center;
 
-  border-width: 0px 0px 8px 8px;
-  border-style: solid;
-  border-color: #4d090f #530409 #aa262e #ce4c55;
+  // border-width: 0px 0px 8px 8px;
+  // border-style: solid;
+  // border-color: #4d090f #530409 #aa262e #ce4c55;
 
   box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.1),
     20px 20px 40px rgba(0, 0, 0, 0.1), 0px 40px 30px rgba(0, 0, 0, 0.12),
@@ -43,6 +43,33 @@ $key-height: 50px;
 
   header {
     display: flex;
+  }
+
+  position: relative;
+  border-top-right-radius: $br;
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+  }
+  &::before {
+    width: 7px;
+    height: 100%;
+    background-color: #ce4c55;
+    right: 100%;
+    top: 0;
+    transform-origin: right bottom;
+    transform: skewY(-45deg);
+    border-top-left-radius: 2px;
+  }
+  &::after {
+    width: 100%;
+    height: 7px;
+    background-color: #aa262e;
+    top: 100%;
+    transform-origin: left top;
+    transform: skewX(-45deg);
+    border-bottom-right-radius: 2px;
   }
 }
 
