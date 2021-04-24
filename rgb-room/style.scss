@@ -1,0 +1,301 @@
+body,
+html {
+  width: 100%;
+  height: 100%;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(
+    180deg,
+    #02020f 5.23%,
+    #221e53 73.59%,
+    #0f0a57 96.16%
+  );
+}
+
+$size: 400px;
+$height: 250px;
+$thick: 20px;
+$rgb-gradient-h: linear-gradient(
+  90deg,
+  #ea346e 0%,
+  #e8bf50 5%,
+  #74f74c 10%,
+  #6ef2f4 15%,
+  #3d68f6 20%,
+  #ea3ef6 25%,
+  #3d68f6 30%,
+  #6ef2f4 35%,
+  #74f74c 40%,
+  #e8bf50 45%,
+  #ea346e 50%,
+  #e8bf50 55%,
+  #74f74c 60%,
+  #6ef2f4 65%,
+  #3d68f6 70%,
+  #ea3ef6 75%,
+  #3d68f6 80%,
+  #6ef2f4 85%,
+  #74f74c 90%,
+  #e8bf50 95%,
+  #ea346e 100%
+);
+$rgb-gradient-v: linear-gradient(
+  0deg,
+  #ea346e 0%,
+  #e8bf50 5%,
+  #74f74c 10%,
+  #6ef2f4 15%,
+  #3d68f6 20%,
+  #ea3ef6 25%,
+  #3d68f6 30%,
+  #6ef2f4 35%,
+  #74f74c 40%,
+  #e8bf50 45%,
+  #ea346e 50%,
+  #e8bf50 55%,
+  #74f74c 60%,
+  #6ef2f4 65%,
+  #3d68f6 70%,
+  #ea3ef6 75%,
+  #3d68f6 80%,
+  #6ef2f4 85%,
+  #74f74c 90%,
+  #e8bf50 95%,
+  #ea346e 100%
+);
+
+.room {
+  transform: scaleY(0.5) translateY(25%);
+
+  .floor {
+    width: $size;
+    height: $size;
+    transform: rotate(45deg);
+    background: linear-gradient(135deg, #1a2c47 0.04%, #51226c 100.04%);
+    position: relative;
+
+    box-shadow: 40px 40px 60px rgba(0, 0, 0, 0.8),
+      50px 50px 70px rgba(0, 0, 0, 0.5), 60px 60px 80px rgba(0, 0, 0, 0.3);
+
+    .wall.wall-left {
+      width: $height;
+      height: $size;
+      position: absolute;
+      right: 100%;
+      transform: skewY(45deg);
+      transform-origin: right bottom;
+    }
+    .wall.wall-right {
+      width: $size;
+      height: $height;
+
+      position: absolute;
+      bottom: 100%;
+      left: 0;
+      transform: skewX(45deg);
+      transform-origin: left bottom;
+    }
+  }
+}
+
+.wall-left {
+  background: linear-gradient(180deg, #1a2c47 0.04%, #51226c 100.04%);
+
+  .w-front {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    & > .rgb-line {
+      width: 5px;
+      height: 100%;
+      position: absolute;
+      left: 0;
+      top: 0;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      background-color: red;
+      &::after {
+        flex-shrink: 0;
+        content: "";
+        height: 400%;
+        width: 100%;
+        position: absolute;
+        background-color: red;
+        background-image: $rgb-gradient-v;
+        background-size: 100%;
+        animation: rgbRoll 2s linear 0s infinite normal;
+        background-repeat: repeat-x;
+        @keyframes rgbRoll {
+          from {
+            transform: translateY(0%);
+          }
+          to {
+            transform: translateY(-50%);
+          }
+        }
+      }
+    }
+  }
+  .w-left {
+    width: 100%;
+    height: $thick;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    transform-origin: left top;
+    transform: skewX(-45deg);
+    background: linear-gradient(
+      90deg,
+      #020d34 0%,
+      #431b5c 56.25%,
+      #151757 100%
+    );
+  }
+  .w-top {
+    width: $thick;
+    height: 100%;
+    position: absolute;
+    right: 100%;
+    top: 0;
+    background-color: #070532;
+    transform-origin: right bottom;
+    transform: skewY(-45deg);
+  }
+}
+
+.wall-right {
+  background-color: #37176d;
+  .w-front {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: linear-gradient(
+      90deg,
+      #192b40 0.04%,
+      #221e53 47.44%,
+      #37176d 100.04%
+    );
+
+    & > .rgb-line {
+      height: 5px;
+      width: 100%;
+      position: absolute;
+      left: 0;
+      top: 0;
+
+      overflow: hidden;
+      // background-color: red;
+      &::after {
+        flex-shrink: 0;
+        content: "";
+        width: 400%;
+        height: 100%;
+        position: absolute;
+        background-image: $rgb-gradient-h;
+        background-size: 100%;
+        animation: rgbRoll2 2s linear 0s infinite normal;
+        background-repeat: repeat-x;
+        @keyframes rgbRoll2 {
+          from {
+            transform: translateX(-50%);
+          }
+          to {
+            transform: translateX(0%);
+          }
+        }
+      }
+    }
+  }
+  .w-top {
+    position: absolute;
+    width: 100%;
+    height: $thick;
+    background-color: #070532;
+    bottom: 100%;
+    left: 0;
+    transform-origin: left bottom;
+    transform: skewX(-45deg);
+
+    &::after {
+      content: "";
+      position: absolute;
+      width: $thick;
+      height: $thick;
+      right: 100%;
+      background-color: #070532;
+    }
+  }
+  .w-right {
+    position: absolute;
+    width: $thick;
+    height: 100%;
+    left: 100%;
+    top: 0;
+    transform-origin: left top;
+    transform: skewY(-45deg);
+    background: linear-gradient(
+      360deg,
+      #1e0a3f 0%,
+      #220a46 56.25%,
+      #15062d 100%
+    );
+  }
+}
+
+.floor-w-left {
+  width: 100%;
+  height: $thick;
+  position: absolute;
+  top: 100%;
+  // background-color: red;
+  left: 0;
+  transform-origin: left top;
+  transform: skewX(45deg);
+  background: linear-gradient(180deg, #020a33 0%, #020e3a 49.48%, #111020 100%);
+
+  &::after {
+    content: "";
+    width: $thick;
+    height: $thick;
+    background-color: #020a33;
+    position: absolute;
+    right: 100%;
+    top: 0;
+  }
+}
+.floor-w-right {
+  width: $thick;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  // background-color: red;
+  left: 100%;
+  transform-origin: left bottom;
+  transform: skewY(45deg);
+  background: linear-gradient(180deg, #110628 0%, #1c083e 53.12%, #14062d 100%);
+
+  &::after {
+    content: "";
+    width: $thick;
+    height: $thick;
+    background-color: #14062d;
+    position: absolute;
+    bottom: 100%;
+    left: 0;
+  }
+}
