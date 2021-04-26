@@ -359,7 +359,7 @@ $rgb-gradient-v: linear-gradient(
   }
 }
 
-// 
+//
 .desk-foot-box {
   width: 95px;
   height: 50px;
@@ -382,18 +382,17 @@ $rgb-gradient-v: linear-gradient(
     width: 100px;
     position: absolute;
     left: 100%;
-    background-color: #0F0D25;
+    background-color: #0f0d25;
     transform-origin: left bottom;
     transform: skewY(45deg);
     display: flex;
     padding-left: 20%;
 
-
     .col-1,
     .col-2 {
       width: 40%;
       height: 90%;
-      background-color: #221C45;
+      background-color: #221c45;
       margin-top: 2%;
       margin-left: 5%;
       position: relative;
@@ -401,7 +400,7 @@ $rgb-gradient-v: linear-gradient(
         content: "";
         width: 6px;
         height: 12px;
-        background-color: #8E98A1;
+        background-color: #8e98a1;
         position: absolute;
         left: 5px;
         top: 50%;
@@ -413,7 +412,7 @@ $rgb-gradient-v: linear-gradient(
         content: "";
         width: 3px;
         height: 8px;
-        background-color: #221C45;
+        background-color: #221c45;
         position: absolute;
         left: 5px;
         top: 50%;
@@ -473,6 +472,163 @@ $rgb-gradient-v: linear-gradient(
     }
     &::after {
       background-color: #231057;
+    }
+  }
+}
+
+$screen-wall-distance: 30px;
+$screen-desktop-distance: 20px;
+.desk .display {
+  width: $screen-wall-distance;
+  height: 140px;
+  // background-color: red;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+
+  .base {
+    width: 30px;
+    height: 50px;
+    background-color: #070532;
+    position: absolute;
+    left: $screen-wall-distance / 2;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #0c2229;
+
+    &::after {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 2px;
+      background-color: #000;
+      top: 100%;
+      left: 0;
+      transform-origin: right top;
+      transform: skewX(45deg);
+    }
+    &::before {
+      content: "";
+      position: absolute;
+      height: 100%;
+      width: 2px;
+      background-color: #000;
+      left: 100%;
+      top: 0;
+      transform-origin: left bottom;
+      transform: skewY(45deg);
+    }
+  }
+
+  .stand-con {
+    width: 8px;
+    height: 14px;
+    // background-color: red;
+    position: absolute;
+    top: 50%;
+    left: $screen-wall-distance / 2 + 3px;
+    transform: translateY(-50%);
+    .stand-wrap {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      left: 0;
+      top: 0;
+      // background-color: rebeccapurple;
+      transform-origin: right bottom;
+      transform: skewY(45deg);
+
+      .stand {
+        width: 50px;
+        height: 100%;
+        background-color: #111216;
+        position: absolute;
+        right: 0;
+        top: 0;
+
+        &::after {
+          content: "";
+          width: 100%;
+          height: 6px;
+          position: absolute;
+          top: 100%;
+          left: 0;
+          background-color: #1d1e24;
+          transform-origin: right top;
+          transform: skewX(-45deg);
+        }
+      }
+    }
+  }
+
+  .screen-con {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    // left: calc(100% + 20px);
+    left: 0%;
+    top: 0;
+    // background-color: yellowgreen;
+    transform-origin: right top;
+    transform: skewY(45deg);
+
+    & .screen {
+      width: 60px;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      right: $screen-desktop-distance;
+      padding: 2px;
+      background-color: #02020f;
+
+      box-shadow: -20px 20px 70px rgba(0, 255, 100, 0.5),
+        -50px 50px 80px rgba(255, 255, 0, 0.4),
+        10px 20px 50px rgba(0, 255, 30, 0);
+
+      p {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 2px;
+        width: 100%;
+        height: 100%;
+        background-color: #1b1b1b;
+      }
+
+      span {
+        display: inline-block;
+
+        transform: rotate(-90deg);
+        color: #fff;
+      }
+
+      &::after {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 5px;
+        left: 0;
+        top: 100%;
+        background-color: #0b0b31;
+        transform-origin: left top;
+        transform: skewX(-45deg);
+      }
+      &::before {
+        content: "";
+        position: absolute;
+        height: 100%;
+        width: 5px;
+        top: 0;
+        right: 100%;
+        background: linear-gradient(
+          180deg,
+          #1b3324 0%,
+          #22521f 50%,
+          #265a1d 100%
+        );
+        transform-origin: right bottom;
+        transform: skewY(-45deg);
+      }
     }
   }
 }
