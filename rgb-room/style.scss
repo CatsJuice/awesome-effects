@@ -632,3 +632,16 @@ $screen-desktop-distance: 20px;
     }
   }
 }
+
+.desk .mouse-pad {
+  width: 40%;
+  height: 60%;
+  background-color: #fff;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 10px;
+  border-radius: 5px;
+  background-color: #020d34;
+  border: 1px solid #e8bf50;
+}
