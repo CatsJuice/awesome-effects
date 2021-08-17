@@ -19,3 +19,5 @@
 - [CodePen](https://codepen.io/catsjuice/pen/RwKBJgN)
 
 > Leopold FC750R PD
+
+## PureJS Search Highlight Demo
