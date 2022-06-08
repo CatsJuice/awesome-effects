@@ -21,3 +21,21 @@
 > Leopold FC750R PD
 
 ## PureJS Search Highlight Demo
+
+**preview:**
+
+![SearchInList](./assets/imgs/search-in-list.png)
+
+- [Online Preview](https://catsjuice.github.io/awesome-effects/search-in-list/)
+- [CodePen](https://codepen.io/catsjuice/pen/GRmMJod)
+
+## Fish Cat
+
+**preview:**
+
+![fish-cat](./assets/imgs/fish-cat.png)
+
+- [Online Preview](https://catsjuice.github.io/awesome-effects/fish-cat/)
+- [CodePen](https://codepen.io/catsjuice/pen/dydqBBO)
+
+> Inspired by [Matthew Galt](https://dribbble.com/shots/18429494-MEOW-Ecommerce-page/attachments/13639482?mode=media)
